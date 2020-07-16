@@ -10,7 +10,7 @@ ARG XTEVE_VERSION
 
 LABEL org.label-schema.build-date="{$BUILD_DATE}" \
       org.label-schema.name="xTeVe Docker Edition" \
-      org.label-schema.description="Latest Dockerized xTeVe v2.1.x IPTV proxy with Guide2go, zap2XML, Crond & Perl Support." \
+      org.label-schema.description="Latest Dockerized xTeVe v2.1.x IPTV proxy with Guide2go, zap2XML, nmp, Crond & Perl Support." \
       org.label-schema.url="https://xteve.dnsforge.net/" \
       org.label-schema.vcs-ref="{$VCS_REF}" \
       org.label-schema.vcs-url="https://github.com/dnsforge-repo/xteve" \
@@ -21,8 +21,8 @@ LABEL org.label-schema.build-date="{$BUILD_DATE}" \
       DISCORD_URL="https://discord.gg/Up4ZsV6"
 
 ENV XTEVE_USER=xteve
-ENV XTEVE_UID=31337
-ENV XTEVE_GID=31337
+ENV XTEVE_UID=1000
+ENV XTEVE_GID=1000
 ENV XTEVE_HOME=/home/xteve
 ENV XTEVE_TEMP=/tmp/xteve
 ENV XTEVE_BIN=/home/xteve/bin
@@ -48,10 +48,13 @@ WORKDIR $XTEVE_HOME
 # Add Bash shell & dependancies
 RUN apk add --no-cache bash busybox-suid curl su-exec
 
+# Add npm for PlutoTV
+RUN apk add --no-cache npm
+
 # Timezone (TZ):  Add the tzdata package and configure for EST timezone.
 # This will override the default container time in UTC.
 RUN apk update && apk add --no-cache tzdata
-ENV TZ=America/New_York
+ENV TZ=America/Chicago
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Add VideoLAN & ffmpeg support
@@ -69,13 +72,18 @@ perl-lwp-useragent-determined \
 perl-digest-sha1
 
 
-# Pull the required binaries for xTeVe, Guide2go and Zap2XML from the repos.
+# Pull the required binaries for xTeVe, Guide2go, Zap2XML and PlutoTV from the repos.
 ADD /bin/xteve_starter.pl $XTEVE_BIN/xteve_starter.pl
 RUN wget $XTEVE_URL -O xteve_linux_amd64.tar.gz \
 && tar zxfvp xteve_linux_amd64.tar.gz -C $XTEVE_BIN && rm -f $XTEVE_HOME/xteve_linux_amd64.tar.gz
 ADD /bin/guide2go $XTEVE_BIN/guide2go
 ADD /bin/guide2conf $XTEVE_BIN/guide2conf
 ADD /bin/zap2xml.pl $XTEVE_BIN/zap2xml.pl
+ADD /bin/pluto-iptv/index.js $XTEVE_BIN/pluto-iptv/index.js
+ADD /bin/pluto-iptv/LICENSE $XTEVE_BIN/pluto-iptv/LICENSE
+ADD /bin/pluto-iptv/package.json $XTEVE_BIN/pluto-iptv/package.json
+ADD /bin/pluto-iptv/README.md $XTEVE_BIN/pluto-iptv/README.md
+ADD /bin/pluto-iptv/yarn.lock $XTEVE_BIN/pluto-iptv/yarn.lock
 
 # Create XML cache directory
 RUN mkdir $XTEVE_HOME/cache && mkdir $XTEVE_HOME/cache/guide2go
@@ -86,6 +94,9 @@ RUN chmod +rx $XTEVE_BIN/xteve
 RUN chmod +rx $XTEVE_BIN/guide2go
 RUN chmod +rx $XTEVE_BIN/guide2conf
 RUN chmod +rx $XTEVE_BIN/zap2xml.pl
+
+# Setup IPTV-Pluto
+RUN npm install $XTEVE_BIN/pluto-iptv
 
 # Configure container volume mappings
 VOLUME $XTEVE_CONF
