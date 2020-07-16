@@ -10,7 +10,10 @@
 <br>
 
 Image Maintainer:  <b>Protektor </b><br>
-Credit to: <b>LeeD</b> <hostmaster@dnsforge.com>
+Credit to: <b>LeeD</b> <hostmaster@dnsforge.com><br>
+           <b>Liam Potter</b> evoactivity<br>
+           <b>Tyler R. Bundy</b> TylerB260<br>
+<br>
 
 For support come visit the xTeVe Discord channel:
 https://discord.gg/eWYquha
