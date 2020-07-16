@@ -9,7 +9,7 @@
 <tr>
 <br>
 
-Image Maintainer:  <b>Protektor </b>
+Image Maintainer:  <b>Protektor </b><br>
 Credit to: <b>LeeD</b> <hostmaster@dnsforge.com>
 
 For support come visit the xTeVe Discord channel:
