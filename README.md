@@ -5,14 +5,13 @@
 
 <br>
 
-<h1 id="xTeVe><a href="https://xteve.de/">xTeVe Docker Edition</a></h1>
-<a href="https://xteve.de"><p><b>Recommended by xteve.de</b></p></a>
+<h1 id="xTeVe><a href="https://xteve.de/">xTeVe Docker Pluto TV Edition</a></h1>
 <tr>
 <br>
 
-Image Maintainer:  <b>LeeD </b>\<hostmaster@dnsforge.com\></a>
+Image Maintainer:  <b>Protektor </b>
 
-For support come visit us at our xTeVe Discord channel:
+For support come visit the xTeVe Discord channel:
 https://discord.gg/eWYquha
 
 <br>
@@ -31,7 +30,8 @@ https://discord.gg/eWYquha
 
 <br>
 
-<p><b> This tool will run your lineup and give you the option of automatically adding a cron job for automated daily downloads. Automated cron's run at 1:15 AM daily.</b></p>
+<p><b> This tool will run your lineup and give you the option of automatically adding a cron job for automated daily downloads. Automated cron's run at 1:15 AM daily.</b>
+<b>If you select PlutoTV it only gets data for 8 hours at a time so it will run every 7 hours.</b></p>
 
 <p><b>You can modify the cron run time with 'crontab -e -u xteve' from the container's command line.</b></p>
 
@@ -55,7 +55,8 @@ xTeVe is a M3U proxy server for Plex, Emby and any client and provider which sup
 <li>xTeVe v2.1 (Linux) x86 64 bit</li>
 <li>Latest Guide2go (Linux) x86 64 bit  (Schedules Direct XMLTV grabber)</li>
 <li>Zap2XML Support  (Perl based zap2it / TVguide.com XMLTV grabber)</li>
-<li>Bash, Perl & crond Support</li>
+<li>PlutoTV Support (JS based PlutoTV M3U & XMLTV grabber)</li>
+<li>Bash, npm, Perl & crond Support</li>
 <li>VLC & ffmpeg Support</li>
 <li>Automated XMLTV Guide Lineups & Cron’s</li>
 <li>Runs as  unprivileged user</li>
