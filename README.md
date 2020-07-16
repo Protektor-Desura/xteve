@@ -10,6 +10,7 @@
 <br>
 
 Image Maintainer:  <b>Protektor </b>
+Credit to: <b>LeeD</b> <hostmaster@dnsforge.com>
 
 For support come visit the xTeVe Discord channel:
 https://discord.gg/eWYquha
