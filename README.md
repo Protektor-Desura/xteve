@@ -392,7 +392,7 @@ To create an automated lineup and cron to run the zap2XML configuration on a dai
 
 <br>
 
-<p><b>guide2conf</b> <b>--username</b> < username@domain.com > <b>--password</b> < password ><b> --name</b> < lineup_name > </p>
+<p><b>guide2conf</b> <b>--username</b> < username@domain.com > <b>--password</b> < password ><b> --name</b> zap2it </p>
 
 <br>
 
@@ -400,7 +400,7 @@ To create an automated lineup and cron to run the zap2XML configuration on a dai
 
 <p><b># Run zap2it crontab daily at 1:15 AM EST </b></p>
 <p><b>15  1  *  *  * /home/xteve/bin/zap2xml.pl  -u username@domain.com -p  ******** -U -c $XTEVE_HOME/cache/zap2xml -o
-$XTEVE_CONF/data/< lineup_name >.xml</b></p>
+$XTEVE_CONF/data/zap2it.xml</b></p>
 
 <br>
 
@@ -410,14 +410,31 @@ To create an automated lineup and cron to run the TVGuide.com configuration on a
 
 <br>
 
-<p><b>guide2conf</b> <b>--username</b> < username@domain.com > <b>--password</b> < password ><b> --name</b> < lineup_name > </p>
+<p><b>guide2conf</b> <b>--username</b> < username@domain.com > <b>--password</b> < password ><b> --name</b> tvguide </p>
 
 <br>
 
 <p><b>Manual crontab configuration:</b></p>
 
 <p><b># Run TVGuide crontab daily at 1:15 AM EST</b></p>
-<p><b>15  1  *  *  * /home/xteve/bin/zap2xml.pl -z -u username@domain.com -p ******** -U -c $XTEVE_HOME/cache/tvguide -o $XTEVE_CONF/data/< lineup_name >.xml</b></p>
+<p><b>15  1  *  *  * /home/xteve/bin/zap2xml.pl -z -u username@domain.com -p ******** -U -c $XTEVE_HOME/cache/tvguide -o $XTEVE_CONF/data/tvguide.xml</b></p>
+
+<br>
+
+<h2 id="PlutoTV Crontab">Pluto TV Crontab</h2>
+
+To create an automated lineup and cron to run the Pluto TV configuration on a daily basis. You can then create the crontab using either the <b>guide2conf</b> utility or manually create the crontab by running the <b>'crontab -e -u xteve'</b> command from a command prompt inside the container. You will need to add the Pluto M3U8 and Pluto XMLTV files located in <b>$XTEVE_CONF/data/pluto.m3u8</b> <b>$XTEVE_CONF/data/pluto.xml</b> to <b>xTeVe->XMLTV</b> once it has been generated on the first run.
+
+<br>
+
+<p><b>guide2conf</b> <b>--username</b> < username@domain.com > <b>--password</b> < password ><b> --name</b> pluto </p>
+
+<br>
+
+<p><b>Manual crontab configuration:</b></p>
+
+<p><b># Run TVGuide crontab daily at 1:15 AM EST</b></p>
+<p><b>0 7/24  *  *  * /home/xteve/bin/pluto-iptv/index.js</b></p>
 
 <br>
 
