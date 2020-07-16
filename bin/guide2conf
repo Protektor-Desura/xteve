@@ -204,8 +204,8 @@ sub create_zapconf {
 		$l_GUIDE2GO_CONFIG = "$l_GUIDE2GO_CONFIG" . ".xml";
 
         print "\n\n";
-        print "Do you want to download guide data for zap2it or TVGuide?\n";
-        print "Enter Z|T|Q: ";
+        print "Do you want to download guide data for zap2it or TVGuide or PlutoTV?\n";
+        print "Enter Z|T|P|Q: ";
         chomp(my $reader = <STDIN>);
 
         if ($reader =~ /^[Z]?$/i) {
@@ -218,6 +218,9 @@ sub create_zapconf {
 		mkpath("$XTEVE_CACHE/tvguide/$l_GUIDE2GO_CONFIG_NAME");
 		system("/bin/chown -R $XTEVE_USER:$XTEVE_USER $XTEVE_CACHE/tvguide");
 		system("/sbin/su-exec $XTEVE_USER $XTEVE_BIN/zap2xml.pl -z -u $l_STR_USERNAME -p $l_STR_PASSWD -U -c $XTEVE_CACHE/tvguide/$l_GUIDE2GO_CONFIG_NAME -o $XTEVE_CONF/data/$l_GUIDE2GO_CONFIG");
+                } elsif ($reader =~ /^[P]$/i) {
+		$ZAPMODE = 2;
+                system("/sbin/su-exec $XTEVE_USER $XTEVE_BIN/pluto-iptv/index.js");
         } elsif ($reader =~ /^[Q]$/i) {
                 print "Exiting..\n";
                 exit(1);
@@ -298,15 +301,21 @@ my ( $l_STR_USERNAME,$l_STR_PASSWD,$l_GUIDE2GO_CONFIG,$ZAPMODE ) = @_;
 		elsif ($ZAPMODE ==1 ) {
 			print T_CRONFILE "15  1  *  *  * $XTEVE_BIN/zap2xml.pl -z -u $l_STR_USERNAME -p $l_STR_PASSWD -U -c $XTEVE_CACHE/tvguide/$l_GUIDE2GO_CONFIG_NAME -o $XTEVE_CONF/data/$l_GUIDE2GO_CONFIG\n";
 		}
+                elsif ($ZAPMODE ==2 ) {
+			print T_CRONFILE "0  7/24  *  *  * $XTEVE_BIN/pluto-iptv/index.js\n";
+                }
     }
 
 }
 
         if ( $ZAPMODE == 0 ) {
-			print T_CRONFILE "# Run zap2it crontab daily at 1:15 AM EST\n15  1  *  *  * $XTEVE_BIN/zap2xml.pl -u $l_STR_USERNAME -p $l_STR_PASSWD -U -c $XTEVE_CACHE/zap2xml/$l_GUIDE2GO_CONFIG_NAME -o $XTEVE_CONF/data/$l_GUIDE2GO_CONFIG\n" if $GUIDE2CONF_CRON_EXIST==0;
+			print T_CRONFILE "# Run zap2it crontab daily at 1:15 AM\n15  1  *  *  * $XTEVE_BIN/zap2xml.pl -u $l_STR_USERNAME -p $l_STR_PASSWD -U -c $XTEVE_CACHE/zap2xml/$l_GUIDE2GO_CONFIG_NAME -o $XTEVE_CONF/data/$l_GUIDE2GO_CONFIG\n" if $GUIDE2CONF_CRON_EXIST==0;
         }
         elsif ($ZAPMODE ==1 ) {
-			print T_CRONFILE "# Run TVGuide crontab daily at 1:15 AM EST\n15  1  *  *  * $XTEVE_BIN/zap2xml.pl -z -u $l_STR_USERNAME -p $l_STR_PASSWD -U -c $XTEVE_CACHE/tvguide/$l_GUIDE2GO_CONFIG_NAME -o $XTEVE_CONF/data/$l_GUIDE2GO_CONFIG\n" if $GUIDE2CONF_CRON_EXIST==0;
+			print T_CRONFILE "# Run TVGuide crontab daily at 1:15 AM\n15  1  *  *  * $XTEVE_BIN/zap2xml.pl -z -u $l_STR_USERNAME -p $l_STR_PASSWD -U -c $XTEVE_CACHE/tvguide/$l_GUIDE2GO_CONFIG_NAME -o $XTEVE_CONF/data/$l_GUIDE2GO_CONFIG\n" if $GUIDE2CONF_CRON_EXIST==0;
+        }
+        elsif ($ZAPMODE ==2 ) {
+			print T_CRONFILE "# Run PlutoTV crontab every 7 hours\n0  7/24  *  *  * $XTEVE_BIN/pluto-iptv/index.js\n" if $GUIDE2CONF_CRON_EXIST==0;
         }
 
         close CRONFILE;
