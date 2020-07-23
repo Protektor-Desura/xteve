@@ -37,7 +37,7 @@ const plutoIPTV = {
 
     // 2020-03-25%2005%3A00%3A00.000%2B0000
     let stopTime = encodeURIComponent(
-      moment().add(8, 'hours').format('YYYY-MM-DD HH:00:00.000ZZ')
+      moment().add(13, 'hours').format('YYYY-MM-DD HH:00:00.000ZZ')
     );
 
     let url = `http://api.pluto.tv/v2/channels?start=${startTime}&stop=${stopTime}`;
@@ -93,7 +93,7 @@ plutoIPTV.grabJSON(function (err, channels) {
       m3uUrl = m3uUrl.toString();
 
       let slug = channel.slug;
-      let logo = channel.solidLogoPNG.path;
+      let logo = channel.colorLogoPNG.path;
       let group = channel.category;
       let name = channel.name;
 
@@ -127,7 +127,7 @@ ${m3uUrl}
           { name: 'display-name', text: channel.name },
           { name: 'display-name', text: channel.number },
           { name: 'desc', text: channel.summary },
-          { name: 'icon', attrs: { src: channel.solidLogoPNG.path } },
+          { name: 'icon', attrs: { src: channel.colorLogoPNG.path } },
         ],
       });
 
